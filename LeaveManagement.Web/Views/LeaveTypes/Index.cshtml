@@ -1,0 +1,77 @@
+﻿@model IEnumerable<LeaveManagement.Web.Models.LeaveTypeViewModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a class="btn btn-outline-success" asp-action="Create"><i class="fa-solid fa-plus"></i> Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DefaultDays)
+            </th>           
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DefaultDays)
+            </td>
+            <td>
+                    <a class="btn btn-outline-warning" asp-action="Edit" asp-route-id="@item.Id"><i class="fas fa-pencil-alt"></i></a> |
+                    <a class="btn btn-outline-info" asp-action="Details" asp-route-id="@item.Id"><i class="fas fa-info-circle"></i></a> |                   
+                    <button data-id="@item.Id" class="btn btn-outline-danger deleteBtn" type="button"><i class="fa-regular fa-trash-can"></i></button>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+<form id="deleteForm" asp-action="Delete">
+    <input type="hidden" id="leaveTypeId" name="Id" />
+</form>
+
+@section Scripts{
+    <script>
+        $(function () {
+            $('.table').DataTable();
+
+            $('.deleteBtn').click(function (e) {
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        Swal.fire(
+                            'Deleted!',
+                            'The record has been deleted.',
+                            'success'
+                        );
+                        var btn = $(this);
+                        var id = btn.data("id");
+                        $('#leaveTypeId').val(id);
+                        $('#deleteForm').submit();
+                    }
+                });
+            });
+        });
+    </script>
+}
