@@ -31,6 +31,7 @@
                 @Html.DisplayFor(modelItem => item.DefaultDays)
             </td>
             <td>
+                    <button data-id="@item.Id" class="btn btn-outline-primary allocateLeaveBtn" type="button">Allocate Leave</button>
                     <a class="btn btn-outline-warning" asp-action="Edit" asp-route-id="@item.Id"><i class="fas fa-pencil-alt"></i></a> |
                     <a class="btn btn-outline-info" asp-action="Details" asp-route-id="@item.Id"><i class="fas fa-info-circle"></i></a> |                   
                     <button data-id="@item.Id" class="btn btn-outline-danger deleteBtn" type="button"><i class="fa-regular fa-trash-can"></i></button>
@@ -44,11 +45,13 @@
     <input type="hidden" id="leaveTypeId" name="Id" />
 </form>
 
+<form id="allocateLeaveForm" asp-action="AllocateLeave">
+    <input type="hidden" id="leaveAllocationId" name="Id" />
+</form>
+
 @section Scripts{
     <script>
-        $(function () {
-            $('.table').DataTable();
-
+        $(function () {            
             $('.deleteBtn').click(function (e) {
                 Swal.fire({
                     title: 'Are you sure?',
@@ -69,6 +72,25 @@
                         var id = btn.data("id");
                         $('#leaveTypeId').val(id);
                         $('#deleteForm').submit();
+                    }
+                });
+            });
+
+            $('.allocateLeaveBtn').click(function (e) {
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You want to allocate a leave!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, allocate a leave!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        var btn = $(this);
+                        var id = btn.data("id");
+                        $('#leaveAllocationId').val(id);
+                        $('#allocateLeaveForm').submit();
                     }
                 });
             });
