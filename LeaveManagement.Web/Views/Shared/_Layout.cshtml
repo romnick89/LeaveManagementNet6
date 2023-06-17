@@ -6,6 +6,7 @@
     <title>@ViewData["Title"] - LeaveManagement.Web</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css" />
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/LeaveManagement.Web.styles.css" asp-append-version="true" />
 </head>
@@ -24,10 +25,10 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="">Apply For Leave</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="LeaveRequests" asp-action="Create">Apply For Leave</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="">My Leave</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="" asp-action="">My Leave</a>
                         </li>                        
                         @if (User.IsInRole(Roles.Administrator))
                         {
@@ -69,9 +70,14 @@
     <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
     <script src="https://kit.fontawesome.com/bfffb8106d.js" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+
     <script>
         $(function(){
             $('.table').DataTable();
+            $(".datepicker").datepicker({
+                dateFormat: "dd-mm-yy"
+            });
         });
     </script>
     <script src="~/js/site.js" asp-append-version="true"></script>
