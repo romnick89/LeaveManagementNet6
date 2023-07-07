@@ -27,11 +27,13 @@ builder.Services.AddHttpContextAccessor();
 //@server=localhost, @port=25(defaultsmtp port)
 builder.Services.AddTransient<IEmailSender>(options => new EmailSender("localhost", 25, "no-reply@leavemanagement.com"));
 
+//add Contracts/Repositories
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 builder.Services.AddScoped<ILeaveTypeRepository, LeaveTypeRepository>();
 builder.Services.AddScoped<ILeaveAllocationRepository, LeaveAllocationRepository>();
 builder.Services.AddScoped<ILeaveRequestRepository, LeaveRequestRepository>();
 
+//add automapper
 builder.Services.AddAutoMapper(typeof(MapperConfig));
 
 builder.Services.AddControllersWithViews();

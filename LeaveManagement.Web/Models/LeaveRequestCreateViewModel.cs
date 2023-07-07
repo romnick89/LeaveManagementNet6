@@ -1,7 +1,6 @@
-﻿using LeaveManagement.Web.Data;
-using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+
 
 namespace LeaveManagement.Web.Models
 {
@@ -32,7 +31,7 @@ namespace LeaveManagement.Web.Models
             }
             if(RequestComments?.Length > 500)
             {
-                yield return new ValidationResult("The comments are too long must be less than 500 characters", new[] { nameof(StartDate), nameof(EndDate) });
+                yield return new ValidationResult("The comments are too long must be less than 500 characters", new[] { nameof(RequestComments) });
             }
         }
     }
