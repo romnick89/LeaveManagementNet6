@@ -29,11 +29,12 @@ namespace LeaveManagement.Web.Repositories
             var leaveRequest = await GetAsync(leaveRequestId);
             leaveRequest.Approved = approved;
 
+
             if (approved)
             {
                 var allocation = await _leaveAllocationRepository.GetEmployeeAllocation(leaveRequest.RequestingEmployeeId, leaveRequest.LeaveTypeId);
-                int daysRequested = (int)(leaveRequest.EndDate - leaveRequest.StartDate).TotalDays;
-                allocation.NumberOfDays -= daysRequested;
+                int daysRequested = leaveRequest.TotalLeaveDays;
+                allocation.NumberOfDays -= daysRequested;                
 
                 await _leaveAllocationRepository.UpdateAsync(allocation);
             }
@@ -49,7 +50,8 @@ namespace LeaveManagement.Web.Repositories
             var leaveRequest = _mapper.Map<LeaveRequest>(model);
             leaveRequest.DateRequested = DateTime.Now;
             leaveRequest.RequestingEmployeeId = user.Id;
-            
+            leaveRequest.TotalLeaveDays = (int)(leaveRequest.EndDate - leaveRequest.StartDate).TotalDays +1;
+
             await AddAsync(leaveRequest);
         }
 

@@ -22,6 +22,9 @@ namespace LeaveManagement.Web.Models
         [Display(Name = "Request Comments")]
         public string? RequestComments { get; set; }
 
+        [Display(Name = "Total Leave Days")]
+        public int TotalLeaveDays { get; set; }
+
         //implement custom validation
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
