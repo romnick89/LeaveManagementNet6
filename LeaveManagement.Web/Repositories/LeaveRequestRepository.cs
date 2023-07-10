@@ -106,5 +106,13 @@ namespace LeaveManagement.Web.Repositories
             model.Employee = _mapper.Map<EmployeeListViewModel>(await _userManager.FindByIdAsync(leaveRequest?.RequestingEmployeeId));
             return model;
         }
+
+        public async Task CancelStatus(int leaveRequestId, bool cancelled)
+        {
+            var leaveRequest = await GetAsync(leaveRequestId);
+            leaveRequest.Cancelled = cancelled;
+
+            await UpdateAsync(leaveRequest);
+        }
     }
 }

@@ -103,6 +103,23 @@ namespace LeaveManagement.Web.Controllers
             return View(model);
         }
 
+        // Put: LeaveRequest/Cancel
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CancelRequest(int id, bool cancelled)
+        {
+            try
+            {
+                await _leaveRequestRepository.CancelStatus(id, cancelled);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }           
+           
+            return RedirectToAction(nameof(MyLeave));
+        }
+
         // GET: LeaveRequests/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {

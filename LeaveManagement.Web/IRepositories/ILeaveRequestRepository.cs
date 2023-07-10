@@ -14,5 +14,6 @@ namespace LeaveManagement.Web.IRepositories
         Task<List<LeaveRequest>> GetAllAsync(string employeeId);
         Task<AdminLeaveRequestViewModel> GetAdminLeaveRequestList();
         Task ChangeApprovalStatus(int leaveRequestId, bool approved);
+        Task CancelStatus(int leaveRequestId, bool cancelled);
     }
 }

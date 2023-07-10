@@ -65,7 +65,7 @@
     <tbody>
         @foreach (var item in Model.LeaveRequests)
         {
-            @if (item.Approved == null)
+            @if (item.Approved == null && item.Cancelled == false)
             {
                 <tr>
                     <td>
@@ -86,7 +86,7 @@
                     <td>
                         @if (item.Cancelled)
                         {
-                            <span class="badge bg-secondary">Pending</span>
+                            <span class="badge bg-secondary">Cancelled</span>
                         }
                         else if (item.Approved == true)
                         {
@@ -102,7 +102,16 @@
                         }
                     </td>
                     <td>
-                        <a asp-action="Cancel" class="btn btn-outline-danger btn-sm" asp-route-id="@item.Id">Cancel Request</a>
+                        @if(item.Cancelled == false)
+                        {
+                            <div class="btn-group me-3" role="group">
+                                <form asp-action="CancelRequest">
+                                    <input name="Id" value="@item.Id" type="hidden" />
+                                    <input name="cancelled" type="hidden" value="true" />
+                                    <button type="submit" class="btn btn-outline-danger btn-sm">Cancel Request</button>
+                                </form>
+                            </div>
+                        }
                     </td>
                 </tr>
             }
@@ -139,7 +148,7 @@
     <tbody>
         @foreach (var item in Model.LeaveRequests)
         {
-            @if (item.Approved != null)
+            @if (item.Approved != null || item.Cancelled == true)
             {
                 <tr>
                     <td>
@@ -160,7 +169,7 @@
                     <td>
                         @if (item.Cancelled)
                         {
-                            <span class="badge bg-secondary">Pending</span>
+                            <span class="badge bg-secondary">Cancelled</span>
                         }
                         else if (item.Approved == true)
                         {
@@ -176,8 +185,17 @@
                         }
                     </td>
                     <td>
-                        <a asp-action="Cancel" class="btn btn-outline-danger btn-sm" asp-route-id="@item.Id">Cancel Request</a>
-                    </td>
+                        @if(item.Cancelled == false)
+                        {
+                            <div class="btn-group me-3" role="group">
+                                <form asp-action="CancelRequest">
+                                    <input name="Id" value="@item.Id" type="hidden" />
+                                    <input name="cancelled" type="hidden" value="true" />
+                                    <button type="submit" class="btn btn-outline-danger btn-sm">Cancel Request</button>
+                                </form>
+                            </div>
+                        }
+                    </td>                    
                 </tr>
             }
         }
