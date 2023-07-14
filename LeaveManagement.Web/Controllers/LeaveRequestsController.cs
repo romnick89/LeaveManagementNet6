@@ -90,8 +90,12 @@ namespace LeaveManagement.Web.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    await _leaveRequestRepository.CreateLeaveRequest(model);
-                    return RedirectToAction(nameof(MyLeave));
+                    var isValid = await _leaveRequestRepository.CreateLeaveRequest(model);
+                    if(isValid)
+                    {
+                        return RedirectToAction(nameof(MyLeave));
+                    }
+                    ModelState.AddModelError(string.Empty, "The number of leave request has exceeded the number of your leave allocations.");
                 }
             }
             catch (Exception ex)
@@ -99,7 +103,7 @@ namespace LeaveManagement.Web.Controllers
                 ModelState.AddModelError(string.Empty, "An Error occured. Please try again later");
             }
             
-            ViewData["LeaveTypeId"] = new SelectList(_context.LeaveTypes, "Id", "Name", model.LeaveTypeId);
+            model.LeaveTypes = new SelectList(_context.LeaveTypes, "Id", "Name", model.LeaveTypeId);
             return View(model);
         }
 

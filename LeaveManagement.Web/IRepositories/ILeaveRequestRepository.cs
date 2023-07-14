@@ -6,7 +6,7 @@ namespace LeaveManagement.Web.IRepositories
 {
     public interface ILeaveRequestRepository : IGenericRepository<LeaveRequest>
     {
-        Task CreateLeaveRequest(LeaveRequestCreateViewModel model);
+        Task<bool> CreateLeaveRequest(LeaveRequestCreateViewModel model);
         Task<EmployeeLeaveRequestViewModel> GetLeaveRequestsDetails();
         Task<LeaveRequestViewModel?> GetLeaveRequestAsync(int? id);
         //overload GetAllAsync() method
